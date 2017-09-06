@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.UserMapper">
+	<select id="count" resultType="int">
+		SELECT COUNT(*) from t_student
+	</select>
+	<select id="list" resultType="User">
+		 SELECT s.id,s.sname,s.age,s.scored,c.cname,c.cplace FROM t_student s left join t_clazz c on s.clazz = c.cid
+		 limit ${totalPage},${pageSize}
+	</select>
+	<delete id="toDel" parameterType="int" >
+		DELETE  from t_student where id=#{id}
+	</delete>
+	<select id="toUpdate" parameterType="int" resultType="User">
+		SELECT s.id,s.sname,s.age,s.scored,c.cname,s.clazz FROM t_student s left join t_clazz c on s.clazz = c.cid where s.id=#{id}
+	</select>
+	<select id="allClazz" resultType="User">
+		select * from t_clazz
+	</select>
+	<update id="doUpdate" parameterType="User">
+		update t_student set sname=#{sname},age=#{age},clazz=#{clazz},scored=#{scored} where id=#{id}
+	</update>
+	<update id="doInsert" parameterType="User">
+		insert into  t_student set sname=#{sname},age=#{age},clazz=#{clazz},scored=#{scored},areacode=#{areacode}
+	</update>
+	<select id="toLook" parameterType="int" resultType="User">
+		SELECT s.id,s.sname,s.age,s.scored,c.cname,a.`name` areaname,t.`name` cityname,p.`name` proname FROM t_student s
+		LEFT JOIN t_clazz c ON s.clazz = c.cid LEFT JOIN a_area a ON s.areacode = a.`code` LEFT JOIN a_city t ON a.`citycode`= t.`code` LEFT JOIN a_province p ON t.`provincecode`=p.`code`
+		where s.id=#{id}
+	</select>
+	<select id="proList" resultType="Pro">
+		SELECT * from a_province
+	</select>
+	<select id="getCity" resultType="City" parameterType="int">
+		SELECT * from a_city where provincecode=#{code}
+	</select>
+	<select id="getArea" resultType="Area" parameterType="int">
+		SELECT * from a_area where citycode=#{code}
+	</select>
+</mapper>
+
