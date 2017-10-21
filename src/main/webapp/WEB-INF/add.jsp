@@ -52,7 +52,7 @@
 </script>
 <body>
     <center>
-        <h2>学生信息添加页面</h2><br>
+        <h2>学生信息添加页面22222222</h2><br>
         <form>
         <table class="table table-striped table-bordered table-hover" style="width:500px;">
             <tr>
